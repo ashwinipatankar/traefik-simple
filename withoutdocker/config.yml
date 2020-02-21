@@ -1,0 +1,25 @@
+# http routing section
+http:
+    routers:
+        # Define a connection between requests and services
+        to-whoami:
+            rule: "Host(`105.103.67.166`) && PathPrefix(`/whoami/`)"
+            # If the rule matches, applies the middleware
+            middlewares:
+            - test-user
+            # If the rule matches, forward to the whoami service (declared below)
+            service: whoami
+  
+middlewares:
+# Define an authentication mechanism
+    test-user:
+        basicAuth:
+            users:
+            - test:$apr1$H6uskkkW$IgXLP6ewTrSuBkTrqE8wj/
+  
+services:
+    # Define how to reach an existing service on our infrastructure
+    whoami:
+        loadBalancer:
+            servers:
+            - url: http://105.103.67.166:9000/

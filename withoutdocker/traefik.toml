@@ -1,0 +1,15 @@
+[entryPoints]
+    [entryPoints.web]
+        # Listen on port 8081 for incoming requests
+        address = ":9081"
+    [entryPoints.http]
+        address = ":9082"
+
+[providers]
+  # Enable the file provider to define routers / middlewares / services in file
+  [providers.file]
+    filename = "./config.toml"
+
+[api]
+    dashboard = true
+    debug = true
